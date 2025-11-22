@@ -74,7 +74,7 @@ const CopyButton = ({ text }: { text: string }) => {
         setCopied(true);
         setTimeout(() => setCopied(false), 1400);
       }}
-      className="gap-2"
+      className="gap-2 bg-secondary/50 hover:bg-secondary border border-border transition-smooth"
     >
       {copied ? <CheckCircle2 className="h-4 w-4" /> : <Clipboard className="h-4 w-4" />}
       {copied ? "Copied" : "Copy"}
@@ -189,72 +189,86 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-100">
-      <header className="sticky top-0 z-10 backdrop-blur bg-slate-950/70 border-b border-slate-800">
-        <div className="mx-auto max-w-6xl px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="h-9 w-9 rounded-xl bg-slate-800 grid place-items-center font-semibold">R</div>
+    <div className="min-h-screen bg-background dark">
+      <header className="sticky top-0 z-10 backdrop-blur-lg bg-card/80 border-b border-border shadow-sm">
+        <div className="mx-auto max-w-6xl px-6 py-5 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary to-accent grid place-items-center font-bold text-primary-foreground shadow-glow">
+              R
+            </div>
             <div>
-              <h1 className="text-xl font-semibold tracking-tight">RCA Assistant</h1>
+              <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+                RCA Assistant
+              </h1>
+              <p className="text-xs text-muted-foreground">Site Reliability Engineering Toolkit</p>
             </div>
           </div>
         </div>
       </header>
 
-      <main className="mx-auto max-w-4xl px-4 py-8">
-        <Card className="bg-slate-900/60 border-slate-800 shadow-xl rounded-2xl">
-          <CardHeader>
-            <CardTitle className="text-lg">RCA Assistant</CardTitle>
-            <CardDescription className="text-slate-400">
-              Generate RCA by ticket number or ask questions using natural language.
+      <main className="mx-auto max-w-5xl px-6 py-10">
+        <Card className="gradient-card border-border shadow-elevation overflow-hidden">
+          <div className="absolute inset-0 gradient-primary opacity-50 pointer-events-none" />
+          <CardHeader className="relative pb-8">
+            <CardTitle className="text-2xl font-bold">Root Cause Analysis</CardTitle>
+            <CardDescription className="text-base text-muted-foreground">
+              Generate comprehensive RCA reports or query incident data using natural language.
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-6 relative">
             <Tabs value={mainTab} onValueChange={setMainTab} className="w-full">
-              <TabsList className="grid grid-cols-2 bg-slate-800 w-full">
-                <TabsTrigger value="rca">Generate RCA by Ticket Number</TabsTrigger>
-                <TabsTrigger value="agentic">Ask Anything (Agentic Query)</TabsTrigger>
+              <TabsList className="grid grid-cols-2 bg-muted/50 backdrop-blur-sm w-full p-1 h-auto">
+                <TabsTrigger value="rca" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-glow transition-smooth py-3 text-sm font-medium">
+                  Generate RCA by Ticket
+                </TabsTrigger>
+                <TabsTrigger value="agentic" className="data-[state=active]:bg-accent data-[state=active]:text-accent-foreground data-[state=active]:shadow-glow transition-smooth py-3 text-sm font-medium">
+                  Agentic Query
+                </TabsTrigger>
               </TabsList>
 
               {/* RCA Tab Content */}
-              <TabsContent value="rca" className="space-y-4 mt-6">
+              <TabsContent value="rca" className="space-y-5 mt-8">
                 <div>
-                  <p className="text-sm text-slate-400 mb-4">
-                    Use when you already know the exact RITM or TASK number.
+                  <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
+                    Generate detailed RCA reports by entering the exact RITM or TASK ticket number.
                   </p>
                   
                   <Tabs value={mode} onValueChange={setMode} className="w-full">
-                    <TabsList className="grid grid-cols-2 bg-slate-800">
-                      <TabsTrigger value="TASK">TASK (RTSK)</TabsTrigger>
-                      <TabsTrigger value="RITM">RITM</TabsTrigger>
+                    <TabsList className="grid grid-cols-2 bg-muted/30 backdrop-blur-sm">
+                      <TabsTrigger value="TASK" className="data-[state=active]:bg-secondary data-[state=active]:text-secondary-foreground transition-smooth">
+                        TASK (RTSK)
+                      </TabsTrigger>
+                      <TabsTrigger value="RITM" className="data-[state=active]:bg-secondary data-[state=active]:text-secondary-foreground transition-smooth">
+                        RITM
+                      </TabsTrigger>
                     </TabsList>
 
-                    <TabsContent value="TASK" className="mt-3">
-                      <label className="text-sm text-slate-300">RTSK Number</label>
+                    <TabsContent value="TASK" className="mt-4 space-y-2">
+                      <label className="text-sm font-medium text-foreground">RTSK Number</label>
                       <Input
                         placeholder="e.g., TASK300045"
                         value={taskNumber}
                         onChange={(e) => setTaskNumber(e.target.value)}
-                        className="mt-1 bg-slate-950 border-slate-700"
+                        className="bg-input border-border focus:border-primary focus:ring-primary/20 transition-smooth"
                       />
                     </TabsContent>
 
-                    <TabsContent value="RITM" className="mt-3">
-                      <label className="text-sm text-slate-300">RITM Number</label>
+                    <TabsContent value="RITM" className="mt-4 space-y-2">
+                      <label className="text-sm font-medium text-foreground">RITM Number</label>
                       <Input
                         placeholder="e.g., RITM200045"
                         value={ritmNumber}
                         onChange={(e) => setRitmNumber(e.target.value)}
-                        className="mt-1 bg-slate-950 border-slate-700"
+                        className="bg-input border-border focus:border-primary focus:ring-primary/20 transition-smooth"
                       />
                     </TabsContent>
                   </Tabs>
 
-                  <div className="flex items-center gap-2 mt-4">
+                  <div className="flex items-center gap-3 mt-6">
                     <Button
                       onClick={submitRca}
                       disabled={!canSubmitRca || rcaLoading}
-                      className="rounded-xl gap-2"
+                      className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-glow transition-smooth gap-2 font-medium"
                     >
                       {rcaLoading && <Loader2 className="h-4 w-4 animate-spin" />}
                       Generate RCA
@@ -262,7 +276,7 @@ const Index = () => {
                     <Button
                       variant="ghost"
                       onClick={() => { setTaskNumber(""); setRitmNumber(""); setRcaResult(null); setRcaError(""); }}
-                      className="rounded-xl"
+                      className="hover:bg-muted transition-smooth"
                     >
                       Clear
                     </Button>
@@ -274,10 +288,10 @@ const Index = () => {
                         initial={{ opacity: 0, y: 6 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 6 }}
-                        className="flex items-start gap-2 p-3 rounded-xl bg-red-950/40 border border-red-900 text-red-200 text-sm mt-4"
+                        className="flex items-start gap-3 p-4 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive text-sm mt-6 backdrop-blur-sm"
                       >
-                        <AlertTriangle className="h-4 w-4 mt-0.5" />
-                        <div className="whitespace-pre-wrap">{rcaError}</div>
+                        <AlertTriangle className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                        <div className="whitespace-pre-wrap flex-1">{rcaError}</div>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -288,20 +302,26 @@ const Index = () => {
                         initial={{ opacity: 0, y: 8 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 8 }}
-                        className="space-y-3 mt-4"
+                        className="space-y-4 mt-6"
                       >
-                        <div className="flex items-center justify-between">
-                          <h3 className="text-sm font-semibold text-slate-200">RCA Output</h3>
+                        <div className="flex items-center justify-between pb-3 border-b border-border">
+                          <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
+                            <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
+                            RCA Output
+                          </h3>
                           <CopyButton text={prettyJson(rcaResult)} />
                         </div>
 
-                        <div className="rounded-2xl bg-slate-950 border border-slate-800 p-4 text-sm leading-relaxed whitespace-pre-wrap">
+                        <div className="rounded-xl bg-card border border-border p-6 text-sm leading-relaxed whitespace-pre-wrap shadow-elevation">
                           <BoldText text={rcaResult.generated_rca || "(No RCA returned)"} />
                         </div>
 
-                        <details className="rounded-2xl bg-slate-950 border border-slate-800 p-4">
-                          <summary className="cursor-pointer text-sm font-medium text-slate-300">Show ticket_data</summary>
-                          <pre className="mt-3 text-xs text-slate-200 overflow-auto">
+                        <details className="rounded-xl bg-card border border-border overflow-hidden group">
+                          <summary className="cursor-pointer px-6 py-4 text-sm font-medium text-foreground hover:bg-muted/50 transition-smooth flex items-center justify-between">
+                            <span>Show ticket_data</span>
+                            <span className="text-muted-foreground group-open:rotate-180 transition-transform">▼</span>
+                          </summary>
+                          <pre className="px-6 py-4 text-xs text-muted-foreground overflow-auto bg-muted/20 border-t border-border">
                             {prettyJson(rcaResult.ticket_data)}
                           </pre>
                         </details>
@@ -312,25 +332,25 @@ const Index = () => {
               </TabsContent>
 
               {/* Agentic Query Tab Content */}
-              <TabsContent value="agentic" className="space-y-4 mt-6">
+              <TabsContent value="agentic" className="space-y-5 mt-8">
                 <div>
-                  <p className="text-sm text-slate-400 mb-4">
-                    Use natural language. The agent will fetch relevant DB rows automatically.
+                  <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
+                    Ask questions in natural language. Our AI agent will automatically query and analyze relevant incident data.
                   </p>
                   
-                  <label className="text-sm text-slate-300">Your question</label>
+                  <label className="text-sm font-medium text-foreground mb-2 block">Your question</label>
                   <Textarea
-                    placeholder="e.g., Show failed Oracle automation tasks" 
+                    placeholder="e.g., Show failed Oracle automation tasks from the last 7 days" 
                     value={agentQuery}
                     onChange={(e) => setAgentQuery(e.target.value)}
-                    className="mt-1 min-h-[120px] bg-slate-950 border-slate-700"
+                    className="min-h-[140px] bg-input border-border focus:border-accent focus:ring-accent/20 transition-smooth resize-none"
                   />
 
-                  <div className="flex items-center gap-2 mt-4">
+                  <div className="flex items-center gap-3 mt-6">
                     <Button
                       onClick={submitAgent}
                       disabled={!agentQuery.trim() || agentLoading}
-                      className="rounded-xl gap-2"
+                      className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-glow transition-smooth gap-2 font-medium"
                     >
                       {agentLoading && <Loader2 className="h-4 w-4 animate-spin" />}
                       Ask Agent
@@ -338,7 +358,7 @@ const Index = () => {
                     <Button
                       variant="ghost"
                       onClick={() => { setAgentQuery(""); setAgentResult(""); setAgentError(""); }}
-                      className="rounded-xl"
+                      className="hover:bg-muted transition-smooth"
                     >
                       Clear
                     </Button>
@@ -350,10 +370,10 @@ const Index = () => {
                         initial={{ opacity: 0, y: 6 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 6 }}
-                        className="flex items-start gap-2 p-3 rounded-xl bg-red-950/40 border border-red-900 text-red-200 text-sm mt-4"
+                        className="flex items-start gap-3 p-4 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive text-sm mt-6 backdrop-blur-sm"
                       >
-                        <AlertTriangle className="h-4 w-4 mt-0.5" />
-                        <div className="whitespace-pre-wrap">{agentError}</div>
+                        <AlertTriangle className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                        <div className="whitespace-pre-wrap flex-1">{agentError}</div>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -364,14 +384,17 @@ const Index = () => {
                         initial={{ opacity: 0, y: 8 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 8 }}
-                        className="space-y-3 mt-4"
+                        className="space-y-4 mt-6"
                       >
-                        <div className="flex items-center justify-between">
-                          <h3 className="text-sm font-semibold text-slate-200">Agent Response</h3>
+                        <div className="flex items-center justify-between pb-3 border-b border-border">
+                          <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
+                            <div className="h-2 w-2 rounded-full bg-accent animate-pulse" />
+                            Agent Response
+                          </h3>
                           <CopyButton text={agentResult} />
                         </div>
 
-                        <div className="rounded-2xl bg-slate-950 border border-slate-800 p-4 text-sm leading-relaxed whitespace-pre-wrap">
+                        <div className="rounded-xl bg-card border border-border p-6 text-sm leading-relaxed whitespace-pre-wrap shadow-elevation">
                           <BoldText text={agentResult} />
                         </div>
                       </motion.div>
@@ -384,8 +407,11 @@ const Index = () => {
         </Card>
       </main>
 
-      <footer className="mx-auto max-w-6xl px-4 pb-10 text-xs text-slate-500">
-        Built for internal RCA workflows. Ensure API_BASE matches your FastAPI host/port.
+      <footer className="mx-auto max-w-6xl px-6 py-8 text-xs text-muted-foreground border-t border-border mt-16">
+        <div className="flex items-center justify-between">
+          <span>Built for internal RCA workflows. Ensure API_BASE matches your FastAPI host/port.</span>
+          <span className="text-primary">v1.0</span>
+        </div>
       </footer>
     </div>
   );
