@@ -74,7 +74,7 @@ const CopyButton = ({ text }: { text: string }) => {
         setCopied(true);
         setTimeout(() => setCopied(false), 1400);
       }}
-      className="gap-2 bg-secondary/50 hover:bg-secondary border border-border transition-smooth"
+      className="gap-2 bg-secondary hover:bg-secondary/80 border-0 transition-smooth shadow-sm"
     >
       {copied ? <CheckCircle2 className="h-4 w-4" /> : <Clipboard className="h-4 w-4" />}
       {copied ? "Copied" : "Copy"}
@@ -189,39 +189,45 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background dark">
-      <header className="sticky top-0 z-10 backdrop-blur-lg bg-card/80 border-b border-border shadow-sm">
+    <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background">
+      <header className="sticky top-0 z-10 backdrop-blur-xl bg-white/80 border-b border-border shadow-sm">
         <div className="mx-auto max-w-6xl px-6 py-5 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary to-accent grid place-items-center font-bold text-primary-foreground shadow-glow">
+            <div className="h-11 w-11 rounded-2xl bg-gradient-to-br from-primary via-accent to-primary grid place-items-center font-bold text-white shadow-lg shadow-primary/20">
               R
             </div>
             <div>
-              <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+              <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-primary via-purple-600 to-accent bg-clip-text text-transparent">
                 RCA Assistant
               </h1>
-              <p className="text-xs text-muted-foreground">Site Reliability Engineering Toolkit</p>
+              <p className="text-xs text-muted-foreground font-medium">Site Reliability Engineering Toolkit</p>
             </div>
           </div>
         </div>
       </header>
 
       <main className="mx-auto max-w-5xl px-6 py-10">
-        <Card className="gradient-card border-border shadow-elevation overflow-hidden">
-          <div className="absolute inset-0 gradient-primary opacity-50 pointer-events-none" />
+        <Card className="bg-white/80 backdrop-blur-sm border-border shadow-xl overflow-hidden">
+          <div className="absolute inset-0 gradient-primary opacity-40 pointer-events-none" />
           <CardHeader className="relative pb-8">
-            <CardTitle className="text-2xl font-bold">Root Cause Analysis</CardTitle>
+            <CardTitle className="text-2xl font-bold text-foreground">Root Cause Analysis</CardTitle>
             <CardDescription className="text-base text-muted-foreground">
               Generate comprehensive RCA reports or query incident data using natural language.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6 relative">
             <Tabs value={mainTab} onValueChange={setMainTab} className="w-full">
-              <TabsList className="grid grid-cols-2 bg-muted/50 backdrop-blur-sm w-full p-1 h-auto">
-                <TabsTrigger value="rca" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-glow transition-smooth py-3 text-sm font-medium">
+              <TabsList className="grid grid-cols-2 bg-muted p-1.5 h-auto shadow-sm">
+                <TabsTrigger 
+                  value="rca" 
+                  className="data-[state=active]:bg-white data-[state=active]:text-primary data-[state=active]:shadow-md transition-smooth py-3.5 text-sm font-semibold rounded-lg"
+                >
                   Generate RCA by Ticket
                 </TabsTrigger>
-                <TabsTrigger value="agentic" className="data-[state=active]:bg-accent data-[state=active]:text-accent-foreground data-[state=active]:shadow-glow transition-smooth py-3 text-sm font-medium">
+                <TabsTrigger 
+                  value="agentic" 
+                  className="data-[state=active]:bg-white data-[state=active]:text-accent data-[state=active]:shadow-md transition-smooth py-3.5 text-sm font-semibold rounded-lg"
+                >
                   Agentic Query
                 </TabsTrigger>
               </TabsList>
@@ -234,32 +240,38 @@ const Index = () => {
                   </p>
                   
                   <Tabs value={mode} onValueChange={setMode} className="w-full">
-                    <TabsList className="grid grid-cols-2 bg-muted/30 backdrop-blur-sm">
-                      <TabsTrigger value="TASK" className="data-[state=active]:bg-secondary data-[state=active]:text-secondary-foreground transition-smooth">
+                    <TabsList className="grid grid-cols-2 bg-muted/80 backdrop-blur-sm p-1">
+                      <TabsTrigger 
+                        value="TASK" 
+                        className="data-[state=active]:bg-white data-[state=active]:text-foreground data-[state=active]:shadow-sm transition-smooth rounded-md"
+                      >
                         TASK (RTSK)
                       </TabsTrigger>
-                      <TabsTrigger value="RITM" className="data-[state=active]:bg-secondary data-[state=active]:text-secondary-foreground transition-smooth">
+                      <TabsTrigger 
+                        value="RITM" 
+                        className="data-[state=active]:bg-white data-[state=active]:text-foreground data-[state=active]:shadow-sm transition-smooth rounded-md"
+                      >
                         RITM
                       </TabsTrigger>
                     </TabsList>
 
                     <TabsContent value="TASK" className="mt-4 space-y-2">
-                      <label className="text-sm font-medium text-foreground">RTSK Number</label>
+                      <label className="text-sm font-semibold text-foreground">RTSK Number</label>
                       <Input
                         placeholder="e.g., TASK300045"
                         value={taskNumber}
                         onChange={(e) => setTaskNumber(e.target.value)}
-                        className="bg-input border-border focus:border-primary focus:ring-primary/20 transition-smooth"
+                        className="bg-white border-2 border-border focus:border-primary focus:ring-4 focus:ring-primary/10 transition-smooth"
                       />
                     </TabsContent>
 
                     <TabsContent value="RITM" className="mt-4 space-y-2">
-                      <label className="text-sm font-medium text-foreground">RITM Number</label>
+                      <label className="text-sm font-semibold text-foreground">RITM Number</label>
                       <Input
                         placeholder="e.g., RITM200045"
                         value={ritmNumber}
                         onChange={(e) => setRitmNumber(e.target.value)}
-                        className="bg-input border-border focus:border-primary focus:ring-primary/20 transition-smooth"
+                        className="bg-white border-2 border-border focus:border-primary focus:ring-4 focus:ring-primary/10 transition-smooth"
                       />
                     </TabsContent>
                   </Tabs>
@@ -268,7 +280,7 @@ const Index = () => {
                     <Button
                       onClick={submitRca}
                       disabled={!canSubmitRca || rcaLoading}
-                      className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-glow transition-smooth gap-2 font-medium"
+                      className="bg-gradient-to-r from-primary to-purple-600 text-white hover:shadow-lg hover:shadow-primary/30 transition-smooth gap-2 font-semibold px-6"
                     >
                       {rcaLoading && <Loader2 className="h-4 w-4 animate-spin" />}
                       Generate RCA
@@ -276,7 +288,7 @@ const Index = () => {
                     <Button
                       variant="ghost"
                       onClick={() => { setTaskNumber(""); setRitmNumber(""); setRcaResult(null); setRcaError(""); }}
-                      className="hover:bg-muted transition-smooth"
+                      className="hover:bg-muted transition-smooth font-medium"
                     >
                       Clear
                     </Button>
@@ -305,23 +317,23 @@ const Index = () => {
                         className="space-y-4 mt-6"
                       >
                         <div className="flex items-center justify-between pb-3 border-b border-border">
-                          <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
-                            <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
+                          <h3 className="text-base font-bold text-foreground flex items-center gap-2">
+                            <div className="h-2 w-2 rounded-full bg-gradient-to-r from-primary to-purple-600 animate-pulse shadow-sm shadow-primary/50" />
                             RCA Output
                           </h3>
                           <CopyButton text={prettyJson(rcaResult)} />
                         </div>
 
-                        <div className="rounded-xl bg-card border border-border p-6 text-sm leading-relaxed whitespace-pre-wrap shadow-elevation">
+                        <div className="rounded-xl bg-gradient-to-br from-white to-muted/30 border-2 border-border p-6 text-sm leading-relaxed whitespace-pre-wrap shadow-sm">
                           <BoldText text={rcaResult.generated_rca || "(No RCA returned)"} />
                         </div>
 
-                        <details className="rounded-xl bg-card border border-border overflow-hidden group">
-                          <summary className="cursor-pointer px-6 py-4 text-sm font-medium text-foreground hover:bg-muted/50 transition-smooth flex items-center justify-between">
+                        <details className="rounded-xl bg-white border-2 border-border overflow-hidden group shadow-sm">
+                          <summary className="cursor-pointer px-6 py-4 text-sm font-semibold text-foreground hover:bg-muted/50 transition-smooth flex items-center justify-between">
                             <span>Show ticket_data</span>
                             <span className="text-muted-foreground group-open:rotate-180 transition-transform">▼</span>
                           </summary>
-                          <pre className="px-6 py-4 text-xs text-muted-foreground overflow-auto bg-muted/20 border-t border-border">
+                          <pre className="px-6 py-4 text-xs text-muted-foreground overflow-auto bg-muted/30 border-t border-border">
                             {prettyJson(rcaResult.ticket_data)}
                           </pre>
                         </details>
@@ -338,19 +350,19 @@ const Index = () => {
                     Ask questions in natural language. Our AI agent will automatically query and analyze relevant incident data.
                   </p>
                   
-                  <label className="text-sm font-medium text-foreground mb-2 block">Your question</label>
+                  <label className="text-sm font-semibold text-foreground mb-2 block">Your question</label>
                   <Textarea
                     placeholder="e.g., Show failed Oracle automation tasks from the last 7 days" 
                     value={agentQuery}
                     onChange={(e) => setAgentQuery(e.target.value)}
-                    className="min-h-[140px] bg-input border-border focus:border-accent focus:ring-accent/20 transition-smooth resize-none"
+                    className="min-h-[140px] bg-white border-2 border-border focus:border-accent focus:ring-4 focus:ring-accent/10 transition-smooth resize-none"
                   />
 
                   <div className="flex items-center gap-3 mt-6">
                     <Button
                       onClick={submitAgent}
                       disabled={!agentQuery.trim() || agentLoading}
-                      className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-glow transition-smooth gap-2 font-medium"
+                      className="bg-gradient-to-r from-accent to-cyan-500 text-white hover:shadow-lg hover:shadow-accent/30 transition-smooth gap-2 font-semibold px-6"
                     >
                       {agentLoading && <Loader2 className="h-4 w-4 animate-spin" />}
                       Ask Agent
@@ -358,7 +370,7 @@ const Index = () => {
                     <Button
                       variant="ghost"
                       onClick={() => { setAgentQuery(""); setAgentResult(""); setAgentError(""); }}
-                      className="hover:bg-muted transition-smooth"
+                      className="hover:bg-muted transition-smooth font-medium"
                     >
                       Clear
                     </Button>
@@ -387,14 +399,14 @@ const Index = () => {
                         className="space-y-4 mt-6"
                       >
                         <div className="flex items-center justify-between pb-3 border-b border-border">
-                          <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
-                            <div className="h-2 w-2 rounded-full bg-accent animate-pulse" />
+                          <h3 className="text-base font-bold text-foreground flex items-center gap-2">
+                            <div className="h-2 w-2 rounded-full bg-gradient-to-r from-accent to-cyan-500 animate-pulse shadow-sm shadow-accent/50" />
                             Agent Response
                           </h3>
                           <CopyButton text={agentResult} />
                         </div>
 
-                        <div className="rounded-xl bg-card border border-border p-6 text-sm leading-relaxed whitespace-pre-wrap shadow-elevation">
+                        <div className="rounded-xl bg-gradient-to-br from-white to-muted/30 border-2 border-border p-6 text-sm leading-relaxed whitespace-pre-wrap shadow-sm">
                           <BoldText text={agentResult} />
                         </div>
                       </motion.div>
@@ -410,7 +422,7 @@ const Index = () => {
       <footer className="mx-auto max-w-6xl px-6 py-8 text-xs text-muted-foreground border-t border-border mt-16">
         <div className="flex items-center justify-between">
           <span>Built for internal RCA workflows. Ensure API_BASE matches your FastAPI host/port.</span>
-          <span className="text-primary">v1.0</span>
+          <span className="font-semibold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">v1.0</span>
         </div>
       </footer>
     </div>
